@@ -59,11 +59,15 @@ public abstract class AbstractTest {
     }
 
     public void assertRequiresObjectIsAbsent(Mutation m) {
+        assertRequiresObjectIsAbsent(m, "Can't create because it already exists");
+    }
+
+    public void assertRequiresObjectIsAbsent(Mutation m, String message) {
         try {
             client.invoke(m);
             TestCase.fail("Expected a ValidationException");
         } catch (RuntimeException e) {
-            assertEquals("Can't create because it already exists", e.getMessage());
+            assertEquals(message, e.getMessage());
         }
     }
 
@@ -79,5 +83,9 @@ public abstract class AbstractTest {
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().startsWith("Can't update"));
         }
+    }
+
+    public String getConfigProperty(String name) {
+        return StreamRegistryIT.context.getEnvironment().getProperty(name);
     }
 }

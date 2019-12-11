@@ -1,5 +1,4 @@
 scalar ObjectNode
-scalar Long
 
 ############ Status ############
 
@@ -252,7 +251,6 @@ type Consumer {
 type Session {
     id: ID
     secret: String!
-    expiresAt: Long!
     producerBindings: [ProducerBinding!]!
     consumerBindings: [ConsumerBinding!]!
 }

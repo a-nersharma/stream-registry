@@ -44,7 +44,7 @@ public class SessionService {
     this.sessionExpirationInMs = sessionExpirationInMs;
   }
 
-  public Session create(Session session) throws ValidationException {
+  public Session create(Session session) {
     Credentials credentials = credentialsGenerator.generate();
     session.setId(credentials.getId());
     session.setSecret(credentials.getSecret());
@@ -52,7 +52,7 @@ public class SessionService {
     return sessionRepository.save(session);
   }
 
-  public Session renew(String id) throws ValidationException {
+  public Session renew(String id) {
     Optional<Session> existing = sessionRepository.findById(id);
     if (existing.isEmpty()) {
       throw new ValidationException("Can't rename session because it doesn't exist");

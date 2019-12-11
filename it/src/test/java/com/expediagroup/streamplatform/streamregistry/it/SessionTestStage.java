@@ -18,7 +18,6 @@ package com.expediagroup.streamplatform.streamregistry.it;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -49,8 +48,16 @@ public class SessionTestStage extends AbstractTest {
 
     assertThat(renewedSession.getRenew().getId(), is(session.getId()));
     assertThat(renewedSession.getRenew().getSecret(), is(session.getSecret()));
+  }
 
-    assertTrue(renewedSession.getRenew().getExpiresAt() > session.getExpiresAt());
+  @Test
+  public void shouldFailRenewOnExpiredSession() throws InterruptedException {
+    CreateSessionMutation.Create session = createSession();
+
+    Thread.sleep(Long.parseLong(getConfigProperty("session-expiration-in-ms")));
+
+    assertRequiresObjectIsAbsent((factory.renewSessionMutationBuilder(session.getId().get(), session.getSecret()).build()),
+            "The session is expired. Please create a new one to access the resource.");
   }
 
   @NotNull

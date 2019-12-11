@@ -29,7 +29,6 @@ import com.expediagroup.streamplatform.streamregistry.graphql.client.ConsumerBin
 import com.expediagroup.streamplatform.streamregistry.graphql.client.ConsumerQuery;
 import com.expediagroup.streamplatform.streamregistry.graphql.client.DomainQuery;
 import com.expediagroup.streamplatform.streamregistry.graphql.client.InfrastructureQuery;
-import com.expediagroup.streamplatform.streamregistry.graphql.client.LongTypeAdapter;
 import com.expediagroup.streamplatform.streamregistry.graphql.client.ObjectNodeTypeAdapter;
 import com.expediagroup.streamplatform.streamregistry.graphql.client.ProducerBindingQuery;
 import com.expediagroup.streamplatform.streamregistry.graphql.client.ProducerQuery;
@@ -60,7 +59,6 @@ public class Client {
         .serverUrl(url)
         .okHttpClient(new OkHttpClient.Builder().build())
         .addCustomTypeAdapter(CustomType.OBJECTNODE, new ObjectNodeTypeAdapter())
-        .addCustomTypeAdapter(CustomType.LONG, new LongTypeAdapter())
         .build();
   }
 

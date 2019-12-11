@@ -408,7 +408,6 @@ fragment SessionPart on Session {
     consumerBindings {
         ... ConsumerBindingPart
     }
-    expiresAt
 }
 
 mutation CreateSession (

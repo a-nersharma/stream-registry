@@ -49,7 +49,7 @@ public class StreamRegistryIT {
   public static Client client;
   public static String url;
 
-  private static ConfigurableApplicationContext context;
+  public static ConfigurableApplicationContext context;
 
   @ClassRule
   public static GenericContainer postgres =
@@ -66,7 +66,8 @@ public class StreamRegistryIT {
         "--spring.datasource.url=jdbc:postgresql://localhost:" + postgres.getMappedPort(5432) + "/streamregistry",
         "--spring.datasource.username=streamregistry",
         "--spring.datasource.password=streamregistry",
-        "--spring.jpa.show-sql=false"
+        "--spring.jpa.show-sql=false",
+        "--session-expiration-in-ms=1000"
     };
     context = SpringApplication.run(StreamRegistryApp.class, args);
     url = "http://localhost:" + context.getEnvironment().getProperty("local.server.port") + "/graphql";
